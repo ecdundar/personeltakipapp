@@ -355,9 +355,16 @@ class _DetayScreenState extends State<DetayScreen> {
                             onPressed: () {
                               Navigator.push(
                                   context,
+                                  /*MaterialPageRoute(
+                                      builder: ((context) => PDFViewerScreen(
+                                            PdfUrl:
+                                                'https://online.burulas.com.tr/Ebelge/Sorgula/c903d9f5-a047-4b77-8823-78b1a560bef6',
+                                          )))*/
                                   MaterialPageRoute(
-                                      builder: ((context) =>
-                                          PDFViewerScreen())));
+                                      builder: ((context) => PDFViewerScreen(
+                                            PdfUrl:
+                                                'https://online.burulas.com.tr/Ebelge/Sorgula/c903d9f5-a047-4b77-8823-78b1a560bef6',
+                                          ))));
                             },
                             child: Text("Aydınlatma Metni")),
                       ),

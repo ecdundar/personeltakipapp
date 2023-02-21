@@ -2,22 +2,25 @@ import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 
 class PDFViewerScreen extends StatefulWidget {
-  const PDFViewerScreen({super.key});
+  final String PdfUrl;
+  const PDFViewerScreen({super.key, required this.PdfUrl});
 
   @override
-  State<PDFViewerScreen> createState() => _PDFViewerScreenState();
+  State<PDFViewerScreen> createState() => _PDFViewerScreenState(PdfUrl);
 }
 
 class _PDFViewerScreenState extends State<PDFViewerScreen> {
+  final String PdfUrl;
+  _PDFViewerScreenState(this.PdfUrl);
   bool isLoading = true;
   PDFDocument? document = null;
 
   loadDocument() async {
-    document = await PDFDocument.fromURL(
-        'https://www.ecma-international.org/wp-content/uploads/ECMA-262_12th_edition_june_2021.pdf');
+    document = await PDFDocument.fromURL(PdfUrl);
     setState(() => isLoading = false);
   }
 
+  //Fix
   @override
   void initState() {
     super.initState();
@@ -26,14 +29,17 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading || document == null
-        ? Center(child: CircularProgressIndicator())
-        : PDFViewer(
-            document: document!,
-            lazyLoad: false,
-            zoomSteps: 1,
-            numberPickerConfirmWidget: const Text(
-              "Confirm",
-            ));
+    return Scaffold(
+        appBar: AppBar(title: Text("PDF Viewer")),
+        body: Container(
+            child: isLoading || document == null
+                ? Center(child: CircularProgressIndicator())
+                : PDFViewer(
+                    document: document!,
+                    lazyLoad: false,
+                    zoomSteps: 1,
+                    numberPickerConfirmWidget: const Text(
+                      "Confirm",
+                    ))));
   }
 }
