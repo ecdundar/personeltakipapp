@@ -7,6 +7,7 @@ import 'package:personeltakipapp/screens/DetayScreen.dart';
 import 'package:personeltakipapp/screens/ListScreen.dart';
 import 'package:personeltakipapp/screens/LoginScreen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:personeltakipapp/screens/PersonelMapScreen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -122,10 +123,11 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: [const Locale('tr', 'TR')],
       builder: EasyLoading.init(),
-      initialRoute: "/",
+      initialRoute: "/Map",
       routes: {
         "/": ((context) => const LoginScreen()),
         "/List": ((context) => const ListScreen()),
+        "/Map": ((context) => const PersonelMapScreen()),
         "/Detay": ((context) => const DetayScreen(
               PersonelItem: null,
             )),
