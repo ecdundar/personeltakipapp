@@ -35,7 +35,8 @@ void main() async {
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
-  'This channel is used for important notifications.', // description
+  description:
+      'This channel is used for important notifications.', // description
   importance: Importance.high,
 );
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -63,7 +64,9 @@ class MyApp extends StatelessWidget {
               android: AndroidNotificationDetails(
                 channel.id,
                 channel.name,
-                channel.description,
+                channelDescription: channel.description,
+                importance: Importance.max,
+                priority: Priority.high,
                 color: Colors.blue,
                 icon: "@mipmap/ic_launcher",
               ),
