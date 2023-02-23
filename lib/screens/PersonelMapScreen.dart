@@ -12,12 +12,16 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
   GoogleMapController? _controller = null;
 
   Set<Marker> getMarkers() {
-    return {
-      Marker(
-          markerId: MarkerId("1"),
-          position: LatLng(40.188526, 29.060965),
-          infoWindow: InfoWindow(title: "Test Title", snippet: "Test Snippet"))
-    };
+    var _marker = Marker(
+        markerId: MarkerId("1"),
+        position: LatLng(40.188526, 29.060965),
+        infoWindow: InfoWindow(title: "Test Title", snippet: "Test Snippet"));
+    //Kamerayı animasyon ile açısını değiştir.
+    _controller
+        ?.animateCamera(CameraUpdate.newLatLngZoom(_marker.position, 15));
+    //Kamerayı move etme
+    //_controller.moveCamera(CameraUpdate.newLatLngZoom(latLng, zoom))
+    return {_marker};
   }
 
   @override
