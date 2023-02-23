@@ -13,8 +13,9 @@ class PersonelMapScreen extends StatefulWidget {
 class _PersonelMapScreenState extends State<PersonelMapScreen> {
   GoogleMapController? _controller = null;
   Position? currentPosition = null;
+  Set<Marker>? _markers = null;
 
-  Set<Marker> getMarkers() {
+  Future<Set<Marker>> getMarkers() async {
     var _marker = Marker(
         markerId: MarkerId("1"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
@@ -31,8 +32,8 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
     } else {
       var currentMarker = Marker(
           markerId: MarkerId("Marker-Current"),
-          icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          icon: await BitmapDescriptor.fromAssetImage(
+              ImageConfiguration(), "lib/assets/image/marker.png"),
           position:
               LatLng(currentPosition!.latitude, currentPosition!.longitude),
           infoWindow: InfoWindow(title: "Konumum"));
@@ -66,6 +67,9 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
 
     currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+
+    await getMarkers();
+
     setState(() {});
   }
 
@@ -88,7 +92,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
         scrollGesturesEnabled: true,
         zoomGesturesEnabled: true,
         zoomControlsEnabled: true,
-        markers: getMarkers(),
+        markers: _markers,
         onMapCreated: (controller) async {
           _controller = controller;
           /*String value = await DefaultAssetBundle.of(context)
