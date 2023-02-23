@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,6 +15,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
   GoogleMapController? _controller = null;
   Position? currentPosition = null;
   Set<Marker> _markers = new Set<Marker>();
+  Set<Polyline> _polylines = new Set<Polyline>();
 
   Future<Set<Marker>> getMarkers() async {
     var _marker = Marker(
@@ -39,6 +41,38 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
               LatLng(currentPosition!.latitude, currentPosition!.longitude),
           infoWindow: InfoWindow(title: "Konumum"));
       return {_marker, currentMarker};
+    }
+  }
+
+  Future<Set<Polyline>> getPolylines() async {
+    if (_markers.length > 1) {
+      var _first = _markers.first;
+      var _last = _markers.last;
+
+      var points = PolylinePoints();
+
+      //Google Direactions Api üzerinden iki nokta arası route bilgisini alıyoruz.
+      var result = await points.getRouteBetweenCoordinates(
+          "AIzaSyDjJ8qPokjrMQ8avViylX4ke9skhyRzHmY",
+          PointLatLng(_first.position.latitude, _first.position.longitude),
+          PointLatLng(_last.position.latitude, _last.position.longitude));
+
+      Map<PolylineId, Polyline> polylines = {};
+      List<LatLng> polylineCoordinates = [];
+
+      if (result.points.isNotEmpty) {
+        result.points.forEach((p) {
+          polylineCoordinates.add(LatLng(p.latitude, p.longitude));
+        });
+        var id = PolylineId('map');
+        polylines[id] = Polyline(
+            polylineId: id,
+            color: Colors.red,
+            points: polylineCoordinates,
+            width: 3);
+      }
+
+      return Set<Polyline>.of(polylines.values);
     }
   }
 
@@ -70,7 +104,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
         desiredAccuracy: LocationAccuracy.high);
 
     _markers = await getMarkers();
-
+    _polylines = await getPolylines();
     setState(() {});
   }
 
@@ -94,6 +128,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
         zoomGesturesEnabled: true,
         zoomControlsEnabled: true,
         markers: _markers,
+        polylines: _polylines,
         onMapCreated: (controller) async {
           _controller = controller;
           /*String value = await DefaultAssetBundle.of(context)
