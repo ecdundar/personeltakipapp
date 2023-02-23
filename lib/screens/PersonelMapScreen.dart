@@ -17,6 +17,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
   Set<Marker> getMarkers() {
     var _marker = Marker(
         markerId: MarkerId("1"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         position: LatLng(40.188526, 29.060965),
         infoWindow: InfoWindow(title: "Test Title", snippet: "Test Snippet"));
     //Kamerayı animasyon ile açısını değiştir.
