@@ -10,6 +10,16 @@ class PersonelMapScreen extends StatefulWidget {
 
 class _PersonelMapScreenState extends State<PersonelMapScreen> {
   GoogleMapController? _controller = null;
+
+  Set<Marker> getMarkers() {
+    return {
+      Marker(
+          markerId: MarkerId("1"),
+          position: LatLng(40.188526, 29.060965),
+          infoWindow: InfoWindow(title: "Test Title", snippet: "Test Snippet"))
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +33,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
         scrollGesturesEnabled: true,
         zoomGesturesEnabled: true,
         zoomControlsEnabled: true,
+        markers: getMarkers(),
         onMapCreated: (controller) async {
           _controller = controller;
           /*String value = await DefaultAssetBundle.of(context)
