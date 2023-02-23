@@ -25,9 +25,10 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
         zoomControlsEnabled: true,
         onMapCreated: (controller) async {
           _controller = controller;
-          String value = await DefaultAssetBundle.of(context)
+          /*String value = await DefaultAssetBundle.of(context)
               .loadString('lib/assets/style/map-style.json');
-          _controller?.setMapStyle(value);
+          controller.setMapStyle(value);
+          setState(() {});*/
         },
       ),
     );
