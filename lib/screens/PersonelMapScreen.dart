@@ -13,7 +13,7 @@ class PersonelMapScreen extends StatefulWidget {
 class _PersonelMapScreenState extends State<PersonelMapScreen> {
   GoogleMapController? _controller = null;
   Position? currentPosition = null;
-  Set<Marker>? _markers = null;
+  Set<Marker> _markers = new Set<Marker>();
 
   Future<Set<Marker>> getMarkers() async {
     var _marker = Marker(
@@ -68,7 +68,7 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
     currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    await getMarkers();
+    _markers = await getMarkers();
 
     setState(() {});
   }
