@@ -30,6 +30,8 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
     } else {
       var currentMarker = Marker(
           markerId: MarkerId("Marker-Current"),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           position:
               LatLng(currentPosition!.latitude, currentPosition!.longitude),
           infoWindow: InfoWindow(title: "Konumum"));
@@ -42,12 +44,12 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
     LocationPermission permission;
 
     //Konum Servisleri Açık Mı Değil Mi ?
-    isServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    /*isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!isServiceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Lütfen konum servislerini aktif ediniz.')));
       return;
-    }
+    }*/
 
     //Konum servisleri açık, uygulamanın yetkisi yok.
     permission = await Geolocator.checkPermission();
@@ -67,8 +69,13 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     getLocation(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Personel Harita")),
       body: GoogleMap(
