@@ -81,6 +81,7 @@ flutter:
   # Uygulama içerisinde kullanacağımız resim ve dosyalar (resources):
   assets:
       - lib/assets/images/
+      - lib/assets/style/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
