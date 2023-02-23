@@ -73,11 +73,13 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
       }
 
       return Set<Polyline>.of(polylines.values);
+    } else {
+      return _polylines;
     }
   }
 
   void getLocation(BuildContext context) async {
-    bool isServiceEnabled = false;
+    //bool isServiceEnabled = false;
     LocationPermission permission;
 
     //Konum Servisleri Açık Mı Değil Mi ?
