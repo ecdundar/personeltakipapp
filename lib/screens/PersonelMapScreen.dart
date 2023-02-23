@@ -33,7 +33,8 @@ class _PersonelMapScreenState extends State<PersonelMapScreen> {
       var currentMarker = Marker(
           markerId: MarkerId("Marker-Current"),
           icon: await BitmapDescriptor.fromAssetImage(
-              ImageConfiguration(), "lib/assets/images/marker.png"),
+              ImageConfiguration(size: Size(150, 150)),
+              "lib/assets/images/marker.png"),
           position:
               LatLng(currentPosition!.latitude, currentPosition!.longitude),
           infoWindow: InfoWindow(title: "Konumum"));
