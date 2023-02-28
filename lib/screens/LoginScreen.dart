@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,12 +21,41 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController =
       new TextEditingController(text: '');
   bool beniHatirla = false;
+  int _CurrentVersion = 25;
 
   @override
   void initState() {
     //form_load öncesi initcomponent, formcreate gibi
     super.initState();
     loadLogin();
+    checkAppVersion();
+    getDeviceInfo();
+  }
+
+  void checkAppVersion() {
+    var apiVersion = 20;
+    if (apiVersion > _CurrentVersion) {
+      StoreRedirect.redirect(
+        androidAppId: "com.ecdyazilim.hayatmobile",
+        iOSAppId: "1529071858",
+      );
+    }
+  }
+
+  void getDeviceInfo() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfoPlugin.androidInfo;
+      print(androidInfo.host);
+    }
+    if (Platform.isIOS) {
+      final iosInfo = await deviceInfoPlugin.iosInfo;
+      print(iosInfo.model);
+    }
+    final deviceInfo = await deviceInfoPlugin.deviceInfo;
+    print(deviceInfo.toString());
+    final allInfo = deviceInfo.data;
+    print(allInfo.toString());
   }
 
   @override
