@@ -7,6 +7,7 @@ import 'package:personeltakipapp/helpers/DBHelper.dart';
 import 'package:personeltakipapp/model/PersonelModel.dart';
 import 'package:personeltakipapp/screens/DetayScreen.dart';
 import 'package:personeltakipapp/screens/QRScreen.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ListScreen extends StatefulWidget {
@@ -96,6 +97,13 @@ class _ListScreenState extends State<ListScreen> {
     }
   }
 
+  void redirectToMarket() {
+    StoreRedirect.redirect(
+      androidAppId: "com.ecdyazilim.hayatmobile",
+      iOSAppId: "1529071858",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +117,14 @@ class _ListScreenState extends State<ListScreen> {
               },
               child: Padding(
                   padding: EdgeInsets.only(right: 20),
-                  child: Icon(Icons.qr_code_2, color: Colors.white)))
+                  child: Icon(Icons.qr_code_2, color: Colors.white))),
+          GestureDetector(
+              onTap: () {
+                redirectToMarket();
+              },
+              child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Icon(Icons.web, color: Colors.white)))
         ],
       ),
       body: Container(
