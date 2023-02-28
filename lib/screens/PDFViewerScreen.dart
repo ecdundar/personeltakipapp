@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PDFViewerScreen extends StatefulWidget {
@@ -28,6 +32,19 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
     loadDocument();
   }
 
+  void downloadAndSharePdf() async {
+    Directory dir = await getApplicationDocumentsDirectory();
+    String path = "${dir.path}/test.pdf";
+
+    await Dio().download(PdfUrl, path);
+
+    var file = new XFile(path);
+    var files = List<XFile>.empty(growable: true);
+    files.add(file);
+
+    Share.shareXFiles(files);
+  }
+
   void sharePdf() {
     Share.share(PdfUrl);
   }
@@ -40,7 +57,8 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
           actions: [
             GestureDetector(
                 onTap: () {
-                  sharePdf();
+                  //sharePdf(); TEXT STRING olarak paylaşım yapıyor.
+                  downloadAndSharePdf();
                 },
                 child: Padding(
                     padding: EdgeInsets.only(right: 20),
