@@ -5,6 +5,7 @@ import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PDFViewerScreen extends StatefulWidget {
   final String PdfUrl;
@@ -42,7 +43,8 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
     var files = List<XFile>.empty(growable: true);
     files.add(file);
 
-    Share.shareXFiles(files);
+    Share.shareXFiles(files,
+        subject: 'Aydınlatma Metni', text: 'Sözleşme Metni');
   }
 
   void sharePdf() {
@@ -62,7 +64,11 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
                 },
                 child: Padding(
                     padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.share, color: Colors.white)))
+                    child: FaIcon(
+                      FontAwesomeIcons.share,
+                      size: 20,
+                      color: Colors.white,
+                    )))
           ],
         ),
         body: Container(
