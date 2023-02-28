@@ -123,7 +123,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: [const Locale('tr', 'TR')],
       builder: EasyLoading.init(),
-      initialRoute: "/Map",
+      initialRoute: "/",
       routes: {
         "/": ((context) => const LoginScreen()),
         "/List": ((context) => const ListScreen()),
