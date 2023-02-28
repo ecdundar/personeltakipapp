@@ -1,5 +1,6 @@
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PDFViewerScreen extends StatefulWidget {
   final String PdfUrl;
@@ -27,10 +28,25 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
     loadDocument();
   }
 
+  void sharePdf() {
+    Share.share(PdfUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("PDF Viewer")),
+        appBar: AppBar(
+          title: Text("PDF Viewer"),
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  sharePdf();
+                },
+                child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Icon(Icons.share, color: Colors.white)))
+          ],
+        ),
         body: Container(
             child: isLoading || document == null
                 ? Center(child: CircularProgressIndicator())
